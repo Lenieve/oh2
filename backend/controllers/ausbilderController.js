@@ -67,10 +67,12 @@ exports.deleteAusbilder = async (req, res) => {
       return res.status(400).send({ message: `Ungültige Ausbilder ID: ${ausbilderId}` });
     }
 
-    const ausbilder = await Ausbilder.findById(ausbilderId);
-    if (!ausbilder) {
-      return res.status(404).send({ message: 'Ausbilder nicht gefunden' });
+    // Überprüfen, ob der Ausbilder noch Azubis hat
+    const azubisCount = await Azubi.countDocuments({ ausbilder: ausbilderId });
+    if (azubisCount > 0) {
+      return res.status(400).send({ message: 'Dieser Ausbilder hat noch Azubis und kann nicht gelöscht werden.' });
     }
+
 
     // Ausbilder aus allen zugehörigen Ausbildungen entfernen
     await Ausbildung.updateMany(

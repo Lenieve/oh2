@@ -8,7 +8,7 @@ const Kalender = require('../models/Kalender');
 
 exports.register = async (req, res) => {
   try {
-    const { username, password, role, name, birthday, ausbildung } = req.body;
+    const { username, password, role, name, birthday, ausbildung, ausbilder } = req.body;
 
     if (!username || !password || !role || !name || !birthday || !ausbildung) {
       return res.status(400).send({ message: 'Alle Felder müssen ausgefüllt sein' });
@@ -31,7 +31,7 @@ exports.register = async (req, res) => {
         }
       }
       user = new Ausbilder({ username, password: hashedPassword, name, birthday, ausbildung });
-    } else {
+    } else { // Azubi
       if (!mongoose.Types.ObjectId.isValid(ausbildung)) {
         return res.status(400).send({ message: 'Ungültige Ausbildung ID' });
       }
@@ -39,11 +39,19 @@ exports.register = async (req, res) => {
       if (!ausbildungExists) {
         return res.status(400).send({ message: 'Ungültige Ausbildung' });
       }
-      user = new Azubi({ username, password: hashedPassword, name, birthday, ausbildung });
+      if (ausbilder && !mongoose.Types.ObjectId.isValid(ausbilder)) {
+        return res.status(400).send({ message: 'Ungültige Ausbilder ID' });
+      }
+      const ausbilderExists = ausbilder ? await Ausbilder.findById(ausbilder) : null;
+      if (ausbilder && !ausbilderExists) {
+        return res.status(400).send({ message: 'Ungültiger Ausbilder' });
+      }
+      user = new Azubi({ username, password: hashedPassword, name, birthday, ausbildung, ausbilder });
     }
 
     const savedUser = await user.save();
 
+    // Kalenderereignis für den Geburtstag erstellen
     const birthdayEvent = new Kalender({
       title: `Geburtstag von ${name}`,
       description: 'Geburtstagsfeier',
@@ -52,15 +60,18 @@ exports.register = async (req, res) => {
       relatedId: savedUser._id
     });
     await birthdayEvent.save();
-
+    // Ausbildung und Ausbilder aktualisieren
     if (role === 'Ausbilder') {
       for (const id of ausbildung) {
         await Ausbildung.findByIdAndUpdate(id, { $set: { ausbilder: savedUser._id } });
       }
-    } else {
-      await Ausbildung.findByIdAndUpdate(ausbildung, { $push: { azubis: savedUser._id } });
-    }
+    } else { // Azubi
+      if (ausbilder) {
+        await Ausbilder.findByIdAndUpdate(ausbilder, { $push: { azubis: savedUser._id } });
+      }
+}
 
+    // Token erstellen und senden
     const payload = {
       userId: savedUser._id,
       role: savedUser.role

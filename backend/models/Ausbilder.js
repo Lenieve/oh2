@@ -13,6 +13,10 @@ const AusbilderSchema = new mongoose.Schema({
   ausbildung: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Ausbildung'
+  }],
+  azubis: [{ 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Azubi'
   }]
 });
 

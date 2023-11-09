@@ -7,6 +7,10 @@ const AzubiSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Ausbildung'  // Achte auf die Schreibweise von 'Ausbildung'
   },
+  ausbilder: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Ausbilder'
+  },
   username: String,
   password: String,
   role: {
