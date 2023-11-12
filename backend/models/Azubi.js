@@ -9,7 +9,8 @@ const AzubiSchema = new mongoose.Schema({
   },
   ausbilder: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Ausbilder'
+    ref: 'Ausbilder',
+    required: true
   },
   username: String,
   password: String,

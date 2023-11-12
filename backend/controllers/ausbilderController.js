@@ -134,8 +134,7 @@ exports.updateAusbilder = async (req, res) => {
     if (birthdayChanged) {
       const event = await Kalender.findOne({ relatedId: ausbilder._id }); // Stellen Sie sicher, dass es ausbilder._id ist
       if (event) {
-        event.startDateTime = new Date(birthday);
-        event.endDateTime = new Date(new Date(birthday).setHours(23, 59, 59, 999));
+        event.date = new Date(birthday);
         await event.save();
       } else {
         console.log(`Kein Kalenderereignis für Ausbilder ID ${ausbilderId} gefunden.`);

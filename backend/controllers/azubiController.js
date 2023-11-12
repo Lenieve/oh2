@@ -103,8 +103,7 @@ exports.updateAzubi = async (req, res) => {
     if (birthdayChanged) {
       const event = await Kalender.findOne({ relatedId: azubiId });
       if (event) {
-        event.startDateTime = new Date(birthday);
-        event.endDateTime = new Date(new Date(birthday).setHours(23, 59, 59, 999));
+        event.date = new Date(birthday);
         await event.save();
       }
     }

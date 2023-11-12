@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const kalenderSchema = new mongoose.Schema({
   title: String,
   description: String,
-  startDateTime: Date,
-  endDateTime: Date,
+  date: Date,
   relatedId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Azubi' // oder der Name des Mongoose-Modells, das Sie für Azubis verwenden

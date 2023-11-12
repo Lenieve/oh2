@@ -32,8 +32,8 @@ exports.register = async (req, res) => {
       }
       user = new Ausbilder({ username, password: hashedPassword, name, birthday, ausbildung });
     } else { // Azubi
-      if (!mongoose.Types.ObjectId.isValid(ausbildung)) {
-        return res.status(400).send({ message: 'Ungültige Ausbildung ID' });
+      if (!mongoose.Types.ObjectId.isValid(ausbildung) || !ausbilder) {
+        return res.status(400).send({ message: 'Ungültige Ausbildung ID oder kein Ausbilder angegeben' });
       }
       const ausbildungExists = await Ausbildung.findById(ausbildung);
       if (!ausbildungExists) {
@@ -55,8 +55,7 @@ exports.register = async (req, res) => {
     const birthdayEvent = new Kalender({
       title: `Geburtstag von ${name}`,
       description: 'Geburtstagsfeier',
-      //startDateTime: birthday,
-      //endDateTime: new Date(new Date(birthday).setHours(23, 59, 59, 999)),
+      date: new Date(birthday),
       relatedId: savedUser._id
     });
     await birthdayEvent.save();
@@ -85,7 +84,7 @@ exports.register = async (req, res) => {
   }
 };
 
-
+/*-------------------------------------------------*/
 
 
 

@@ -2,12 +2,11 @@ const Kalender = require('../models/Kalender');
 // Event erstellen
 exports.createEvent = async (req, res) => {
   try {
-    const { title, description, startDateTime, endDateTime } = req.body;
+    const { title, description, date } = req.body;
     const event = new Kalender({
       title,
       description,
-      startDateTime,
-      endDateTime
+      date
     });
     await event.save();
     res.status(201).json(event);
@@ -30,12 +29,11 @@ exports.getEvents = async (req, res) => {
 exports.updateEvent = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, startDateTime, endDateTime } = req.body;
+    const { title, description, date } = req.body;
     const event = await Kalender.findByIdAndUpdate(id, {
       title,
       description,
-      startDateTime,
-      endDateTime
+      date
     }, { new: true }); // { new: true } gibt das aktualisierte Dokument zurück
 
     if (!event) {
