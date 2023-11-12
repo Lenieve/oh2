@@ -55,8 +55,8 @@ exports.register = async (req, res) => {
     const birthdayEvent = new Kalender({
       title: `Geburtstag von ${name}`,
       description: 'Geburtstagsfeier',
-      startDateTime: birthday,
-      endDateTime: new Date(new Date(birthday).setHours(23, 59, 59, 999)),
+      //startDateTime: birthday,
+      //endDateTime: new Date(new Date(birthday).setHours(23, 59, 59, 999)),
       relatedId: savedUser._id
     });
     await birthdayEvent.save();

@@ -1,3 +1,4 @@
+process.env.TZ = 'UTC';
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -40,9 +41,12 @@ app.use('/ausbildung', ausbildungRoutes);
 app.use('/wunschliste', wunschlisteRoutes);
 app.use('/kalender', kalenderRoutes);
 
+module.exports = app;
 
+if (require.main === module) {
+  // Der Server wird nur gestartet, wenn die Datei direkt aufgerufen wird (z.B. mit node server.js)
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-// Starte den Server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
