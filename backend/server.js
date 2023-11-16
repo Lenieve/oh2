@@ -3,6 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const cors = require('cors');
+
+
 
 
 
@@ -34,6 +37,13 @@ mongoose.connect('mongodb://localhost:27017/tester', {
 
 // Middleware
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:3000', // or the specific origin you want to allow
+  methods: 'GET,POST,PUT,DELETE', // the HTTP methods you want to allow
+  credentials: true, // if you're using cookies and sessions
+  optionsSuccessStatus: 200 // for legacy browsers that don't support CORS
+}));
+
 
 // Verbinde die Routen mit der Anwendung
 app.use('/auth', authRoutes);

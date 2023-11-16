@@ -4,8 +4,8 @@ const ausbildungController = require('../controllers/ausbildungController');
 const { authenticateJWT, authorizeRole } = require('../middlewares/authMiddleware');
 
 
-
-router.post('/',ausbildungController.createAusbildung);
+router.post('/', ausbildungController.createAusbildung);
+router.get('/', ausbildungController.listAusbildung);
 router.delete('/:id',ausbildungController.deleteAusbildung);
 router.get('/:id', ausbildungController.getAusbildungById);
 router.put('/:id', ausbildungController.updateAusbildung);

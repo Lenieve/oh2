@@ -218,3 +218,17 @@ exports.listBirthdays = async (req, res) => {
     res.status(500).send({ message: 'Serverfehler' });
   }
 };
+
+
+exports.listAusbilder = async (req, res) => {
+  try {
+    const ausbilder = await Ausbilder.find();
+    if (!ausbilder.length) {
+      return res.status(404).send({ message: 'Keine Ausbilder gefunden' });
+    }
+    res.status(200).send(ausbilder);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Serverfehler' });
+  }
+};

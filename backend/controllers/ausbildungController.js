@@ -125,3 +125,12 @@ exports.listAusbilderByAusbildung = async (req, res) => {
     res.status(500).send({ message: 'Serverfehler' });
   }
 };
+exports.listAusbildung = async (req, res) => {
+  try {
+    const ausbildungen = await Ausbildung.find();
+    res.status(200).send(ausbildungen);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Serverfehler' });
+  }
+};
