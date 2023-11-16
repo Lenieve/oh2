@@ -1,40 +1,54 @@
 const Ausbilder = require('../models/Ausbilder');
-const Azubi = require('../models/Azubi');
 const Ausbildung = require('../models/Ausbildung');
+const Azubi = require('/Users/jacquelineloewe/yannickihkgitrepo/oh2/backend/models/Azubi.js');
+const Kalender = require('../models/Kalender');
 const mongoose = require('mongoose');
-const Kalender = require('../models/Kalender'); // Pfad anpassen, falls nötig
+const bcrypt = require('bcryptjs'); // Ensure you have bcryptjs installed for password hashing
 
-// Logik zum Erstellen eines Ausbilders
 exports.createAusbilder = async (req, res) => {
-  
   try {
-    const { name, birthday, ausbildung } = req.body;
-    if (!name || !birthday || !ausbildung || ausbildung.length === 0) {
+    const { name, birthday, ausbildung, username, password } = req.body;
+
+    // Validate required fields
+    if (!name || !birthday || !ausbildung || ausbildung.length === 0 || !username || !password) {
       return res.status(400).send({ message: 'Alle Felder müssen ausgefüllt sein' });
     }
 
-    // Überprüfen, ob alle Ausbildungen existieren
+    // Check if the username already exists
+    const usernameExists = await Ausbilder.findOne({ username });
+    if (usernameExists) {
+      return res.status(400).send({ message: 'Benutzername existiert bereits' });
+    }
+
+    // Check if the provided Ausbildungen IDs are valid and don't already have an Ausbilder
     for (const id of ausbildung) {
-      const ausbildungExists = await Ausbildung.findById(id);
-      if (!ausbildungExists) {
+      if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).send({ message: `Ungültige Ausbildung mit der ID ${id}` });
       }
-    }
-
-    // Überprüfen, ob bereits ein Ausbilder für diese Ausbildung(en) existiert
-    for (const id of ausbildung) {
-      const existingAusbildung = await Ausbildung.findById(id);
-      if (existingAusbildung.ausbilder) {
-        return res.status(400).send({ message: `Die Ausbildung mit der ID ${id} hat bereits einen Ausbilder.` });
+      const ausbildungExists = await Ausbildung.findById(id);
+      if (!ausbildungExists || ausbildungExists.ausbilder) {
+        return res.status(400).send({ message: `Die Ausbildung mit der ID ${id} hat bereits einen Ausbilder oder ist ungültig.` });
       }
     }
 
-    const ausbilder = new Ausbilder({ name, birthday, ausbildung });
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create the Ausbilder
+    const ausbilder = new Ausbilder({
+      name,
+      birthday,
+      ausbildung,
+      username,
+      password: hashedPassword,
+      role: 'Ausbilder' // or use req.body.role if role should be set dynamically
+    });
+
     await ausbilder.save();
 
-    // Aktualisieren der Ausbildungen mit der neuen Ausbilder-ID
+    // Update Ausbildung documents with the new Ausbilder ID
     for (const id of ausbildung) {
-      await Ausbildung.findByIdAndUpdate(id, { $push: { ausbilder: ausbilder._id } });
+      await Ausbildung.findByIdAndUpdate(id, { $set: { ausbilder: ausbilder._id } });
     }
 
     res.status(201).send(ausbilder);
@@ -43,7 +57,6 @@ exports.createAusbilder = async (req, res) => {
     res.status(500).send({ message: 'Serverfehler' });
   }
 };
-
 
 
 // Logik zum Abrufen der Details eines Ausbilders
@@ -67,12 +80,17 @@ exports.deleteAusbilder = async (req, res) => {
       return res.status(400).send({ message: `Ungültige Ausbilder ID: ${ausbilderId}` });
     }
 
+    // Check if Ausbilder exists
+    const ausbilderExists = await Ausbilder.findById(ausbilderId);
+    if (!ausbilderExists) {
+      return res.status(404).send({ message: 'Ausbilder nicht gefunden' });
+    }
+
     // Überprüfen, ob der Ausbilder noch Azubis hat
     const azubisCount = await Azubi.countDocuments({ ausbilder: ausbilderId });
     if (azubisCount > 0) {
       return res.status(400).send({ message: 'Dieser Ausbilder hat noch Azubis und kann nicht gelöscht werden.' });
     }
-
 
     // Ausbilder aus allen zugehörigen Ausbildungen entfernen
     await Ausbildung.updateMany(
@@ -81,7 +99,7 @@ exports.deleteAusbilder = async (req, res) => {
     );
 
     // Zugehöriges Kalenderereignis löschen
-    const event = await Kalender.findOne({ relatedId: ausbilder._id });
+    const event = await Kalender.findOne({ relatedId: ausbilderId });
     if (event) {
       await event.remove();
     }
@@ -102,17 +120,27 @@ exports.deleteAusbilder = async (req, res) => {
 
 exports.updateAusbilder = async (req, res) => {
   try {
-    const ausbilderId = req.params.id;
-    const { name, birthday, ausbildung } = req.body;
+      const ausbilderId = req.params.id;
+      const { name, birthday, ausbildung } = req.body;
+  
+      if (!mongoose.Types.ObjectId.isValid(ausbilderId)) {
+        return res.status(400).send({ message: `Ungültige Ausbilder ID: ${ausbilderId}` });
+      }
+  
+      const ausbilder = await Ausbilder.findById(ausbilderId);
+      if (!ausbilder) {
+        return res.status(404).send({ message: 'Ausbilder nicht gefunden' });
+      }
+  
+      // Validate Ausbildung IDs
+      for (const id of ausbildung) {
+        if (!mongoose.Types.ObjectId.isValid(id) || !(await Ausbildung.findById(id))) {
+          return res.status(400).send({ message: `Ungültige Ausbildung ID: ${id}` });
+        }
+      }
 
-    if (!mongoose.Types.ObjectId.isValid(ausbilderId)) {
-      return res.status(400).send({ message: `Ungültige Ausbilder ID: ${ausbilderId}` });
-    }
-
-    const ausbilder = await Ausbilder.findById(ausbilderId);
-    if (!ausbilder) {
-      return res.status(404).send({ message: 'Ausbilder nicht gefunden' });
-    }
+    // Check if the birthday is being changed
+    const birthdayChanged = birthday && birthday !== ausbilder.birthday.toISOString();
 
     // Entfernen des Ausbilders aus allen alten Ausbildungen
     await Ausbildung.updateMany(
@@ -132,7 +160,7 @@ exports.updateAusbilder = async (req, res) => {
     await ausbilder.save();
 
     if (birthdayChanged) {
-      const event = await Kalender.findOne({ relatedId: ausbilder._id }); // Stellen Sie sicher, dass es ausbilder._id ist
+      const event = await Kalender.findOne({ relatedId: ausbilder._id });
       if (event) {
         event.date = new Date(birthday);
         await event.save();
@@ -157,17 +185,17 @@ exports.updateAusbilder = async (req, res) => {
 exports.listAzubisByAusbilder = async (req, res) => {
   try {
     const ausbilderId = req.params.id;
-    // Finden aller Ausbildungen, die diesem Ausbilder gehören
-    const ausbildungen = await Ausbildung.find({ ausbilder: ausbilderId });
-    
-    if (!ausbildungen.length) return res.status(404).send({ message: 'Keine Ausbildungen gefunden' });
 
-    const ausbildungIds = ausbildungen.map(a => a._id);
-    
-    // Finden aller Azubis, die zu diesen Ausbildungen gehören
-    const azubis = await Azubi.find({ ausbildung: { $in: ausbildungIds } });
+    if (!mongoose.Types.ObjectId.isValid(ausbilderId)) {
+      return res.status(400).send({ message: `Ungültige Ausbilder ID: ${ausbilderId}` });
+    }
 
-    if (!azubis.length) return res.status(404).send({ message: 'Keine Azubis gefunden' });
+    // Finden aller Azubis, die diesem Ausbilder gehören
+    const azubis = await Azubi.find({ ausbilder: ausbilderId });
+
+    if (!azubis.length) {
+      return res.status(404).send({ message: 'Keine Azubis gefunden' });
+    }
 
     res.status(200).send(azubis);
   } catch (error) {
@@ -175,6 +203,7 @@ exports.listAzubisByAusbilder = async (req, res) => {
     res.status(500).send({ message: 'Serverfehler' });
   }
 };
+
 
 // Logik zum Anzeigen der Geburtstage der Azubis
 exports.listBirthdays = async (req, res) => {

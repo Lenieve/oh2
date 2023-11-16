@@ -5,7 +5,7 @@ const { authenticateJWT, authorizeRole } = require('../middlewares/authMiddlewar
 
 
 
-router.post('/', authenticateJWT, authorizeRole(['Admin']), ausbilderController.createAusbilder);
+router.post('/', ausbilderController.createAusbilder);
 router.get('/:id',authenticateJWT, authorizeRole(['Ausbilder']), ausbilderController.getAusbilderById);
 router.get('/:id/azubis', authenticateJWT, authorizeRole(['Ausbilder']),ausbilderController.listAzubisByAusbilder);
 router.delete('/:id', authenticateJWT, authorizeRole(['Ausbilder']),ausbilderController.deleteAusbilder);

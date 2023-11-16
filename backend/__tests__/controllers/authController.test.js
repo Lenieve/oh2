@@ -1,9 +1,9 @@
 const request = require('supertest');
-const app = require('../server'); // Adjust the path as necessary
-const Ausbilder = require('../models/Ausbilder');
-const Ausbildung = require('../models/Ausbildung');
-const Kalender = require('../models/Kalender');
-const Azubi = require('../models/Azubi');
+const app = require('../../server'); // Adjust the path as necessary
+const Ausbilder = require('../../models/Ausbilder');
+const Ausbildung = require('../../models/Ausbildung');
+const Kalender = require('../../models/Kalender');
+const Azubi = require('../../models/Azubi');
 const bcrypt = require('bcrypt');
 
 
@@ -401,7 +401,5 @@ describe('AuthController Login Functionality', () => {
     // Restore the original implementation after the test
     Ausbilder.findOne.mockRestore();
   });    
-
-  // ... Additional tests ...
 
 });

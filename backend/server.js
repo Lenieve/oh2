@@ -18,6 +18,8 @@ const kalenderRoutes = require('./routes/kalenderRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const calculateCountdown = require('./countdown');
+
 // Verbindung zur MongoDB Datenbank
 mongoose.connect('mongodb://localhost:27017/tester', {
   useNewUrlParser: true,
@@ -40,6 +42,20 @@ app.use('/ausbilder', ausbilderRoutes);
 app.use('/ausbildung', ausbildungRoutes);
 app.use('/wunschliste', wunschlisteRoutes);
 app.use('/kalender', kalenderRoutes);
+app.get('/countdown/:userId', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    const countdown = calculateCountdown(user.birthday);
+    res.json(countdown);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+});
 
 module.exports = app;
 
