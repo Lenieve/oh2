@@ -116,13 +116,16 @@ exports.login = async (req, res) => {
       userId: user._id,
       role: user.role
     };
-
+    
     const token = jwt.sign({ data: payload }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+    
+    // Include the role in the response
     res.status(200).json({
       token: token,
+      userRole: user.role, // Send back the user role
       message: 'Erfolgreich angemeldet.'
     });
+    
   } catch (error) {
     console.error(error);
     res.status(500).send('Ein Fehler ist aufgetreten.');

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../css/authcss.css'; // Make sure this path is correct
+import { jwtDecode } from 'jwt-decode';
+
+
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -23,7 +26,16 @@ function LoginPage() {
   
       if (response.status === 200 && response.data.token) {
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userRole', response.data.userRole);  // Store the user role
+        
+        // Decode the token to get the user role
+        const decoded = jwtDecode(response.data.token);
+        console.log('Decoded JWT:', decoded);
+        
+        // Assuming the role is inside the 'data' property in the decoded token
+        const userRole = decoded.data.role;
+        console.log('User role from token:', userRole);
+        localStorage.setItem('userRole', userRole);
+      
         navigate('/dashboard');
       } else {
         console.error('Login failed:', response.data.message);

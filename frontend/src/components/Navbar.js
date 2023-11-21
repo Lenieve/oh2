@@ -4,7 +4,8 @@ import './Navbar.css'; // Ensure you have this CSS file
 const Sidebar = () => {
   
   const userRole = localStorage.getItem('userRole');
-  console.log("Current user role in Navbar:", userRole);
+  console.log('Current user role in Navbar:', userRole);
+
 
   return (
     <aside className="sidebar">
