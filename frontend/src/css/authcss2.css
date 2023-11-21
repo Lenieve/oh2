@@ -1,0 +1,121 @@
+/* Background styling */
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(88deg, #749BFF 3.32%, rgba(176, 124, 255, 0.00) 119.95%), #B07CFF;
+  }
+  
+  /* White box styling */
+  .registration-form {
+    background-color: #FFF; /* White background */
+    border-radius: 29px; /* Rounded corners */
+    width: 1004px; /* Width as specified */
+    height: 596px; /* Height as specified */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    padding: 40px; /* Padding inside */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Role switch styling */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin: 10px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #749BFF;
+  }
+  
+
+  
+  /* Button styling */
+  .register-button {
+    background-color: #7D96FF;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    margin-top: 20px; /* Adjust as needed */
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%; /* Full width of the column */
+  }
+  
+  /* ... other styles ... */
+/* Ensure that all input fields and select fields have the same size and styles */
+.input-field, .select-field {
+    width: 340px;
+    height: 57px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #DCE8FF;
+    border: none;
+    margin-bottom: 16px; /* Equal spacing between all fields */
+    font-size: 16px;
+    color: #464D5F; /* Text color for inputs and selects */
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+  .select-field {
+    -webkit-appearance: none; /* Removes default styling on Safari */
+    -moz-appearance: none; /* Removes default styling on Firefox */
+    appearance: none; /* Removes default arrow on most browsers */
+    /*background-image: url('path-to-your-dropdown-arrow-image.svg'); /* Path to custom dropdown arrow image */
+    background-repeat: no-repeat;
+    background-position: right 15px center; /* Position the arrow inside the select field */
+    background-size: 12px 12px; /* Size of the custom arrow image */
+  }  
+
+  /* Center the toggle switch container */
+.role-switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Take up the full width to center the switch */
+    margin-bottom: 16px; /* Match the spacing to the input fields */
+  }
+  
+  /* Style the label around the switch to not affect the text alignment */
+  .switch-label {
+    /* This will be an inline label so it doesn't affect layout */
+    margin-right: 8px; /* Space before the switch */
+  }
+  

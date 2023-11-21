@@ -1,0 +1,88 @@
+.sidebar {
+  width: 293px; /* Set the width to 293px as specified */
+  height: 100vh; /* Full height of the viewport */
+  background: linear-gradient(180deg, #B07DFF -4.79%, rgba(176, 125, 255, 0.00) 46.76%), 
+              linear-gradient(180deg, #7499FE 45.19%, rgba(116, 153, 254, 0.00) 95.19%), 
+              #B07CFF; /* Gradient background as specified */
+  display: flex;
+  flex-direction: column;
+  color: white; /* Assuming you want white text */
+  /* Add additional styles as needed */
+  
+}
+
+.sidebar-header {
+  width: 243px;
+  height: 114px;
+  color: #FFF;
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 70px;
+  letter-spacing: 3.36px; /* Adjust for "Office" */
+  margin-bottom: 120px; /* Space below the header */
+  padding-left: 23px;
+}
+
+.sidebar-header .hooray {
+  letter-spacing: 7.2px; /* Adjust for "Hooray" */
+}
+
+.nav-list {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  display: flex; /* Enable Flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-end; /* Align items to the right */
+  width: 100%; /* Full width of the sidebar */
+}
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Aligns children (nav-items) to the right */
+  width: 100%;
+  /* other styles... */
+}
+
+.nav-item {
+  display: flex; /* Enable Flexbox */
+  align-items: center; /* Align icon and text vertically */
+  justify-content: flex-end; /* Align content to the right */
+  width: 222px;
+  height: 50px;
+  display: flex;
+  align-items: x  ;
+  padding: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.nav-item.active {
+  background-color: rgba(217, 217, 217, 0.6); /* Highlight for active item */
+}
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Slight highlight on hover */
+  border-top-left-radius: 25px; 
+  border-bottom-left-radius: 25px;
+}
+
+/* Add media queries and responsive styles as needed */
+
+.nav-item .title {
+  width: 167px;
+  height: 20px;
+  flex-shrink: 0;
+  color: #FFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 125% */
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 20px; /* Adjust as needed */
+}

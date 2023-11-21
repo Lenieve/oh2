@@ -1,27 +1,67 @@
-import React from 'react';
-import '../../css/authcss.css'; // This is the relative path to your CSS file
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../../css/authcss.css'; // Make sure this path is correct
 
-export default function LoginPage() {
-  // Component logic
+function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+  
+    console.log("Attempting to log in with", { username, password });
+  
+    try {
+      const response = await axios.post('http://localhost:3000/auth/login', {
+        username,
+        password
+      });
+  
+      console.log("Login response:", response);
+  
+      if (response.status === 200 && response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userRole', response.data.userRole);  // Store the user role
+        navigate('/dashboard');
+      } else {
+        console.error('Login failed:', response.data.message);
+      }
+    } catch (error) {
+      // Handle any errors that occur during login
+      console.error('An error occurred during login:', error);
+    }
+  };
+
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2>Welcome</h2>
-        <div className="user-icon">oH</div>
-        <form>
-          <div className="input-container">
-            <input type="email" id="email" name="email" placeholder="Email" required />
+    <div className="background">
+      <div className="login-box">
+        <p className="title">Office Hooray</p>
+        <p className="welcome-back">welcome back</p>
+        <form className="login-form" onSubmit={handleLogin}>
+          <input
+            type="text"
+            placeholder="Username"
+            className="input-field"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="input-field"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div className="account-actions">
+            <p className="register-now">Don't have an account yet? <a href="/register">Register Now</a></p>
+            <button type="submit" className="login-button">LOGIN</button>
           </div>
-          <div className="input-container">
-            <input type="password" id="password" name="password" placeholder="Password" required />
-            <span className="password-toggle-icon">👁️</span>
-          </div>
-          <button type="submit" className="login-btn">LOGIN</button>
         </form>
-        <div className="signup-link">
-          Don't have an account? <a href="/signup">Sign Up</a>
-        </div>
       </div>
     </div>
   );
 }
+
+export default LoginPage;

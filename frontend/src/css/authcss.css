@@ -1,154 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
 
 
-.login-container {
+/*======================================LOGIN PAGE======================================*/
+.background {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
+    min-height: 100vh;
+    background: linear-gradient(88deg, #749BFF 3.32%, rgba(176, 124, 255, 0.00) 119.95%), #B07CFF; /* Gradient background */
+  }
+  
+.login-box {
+    background: linear-gradient(270deg, #7A98FF 0%, rgba(122, 152, 255, 0.00) 60.36%), #FFF;
+    width: 700px;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 29px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+    padding: 40px;
+    padding-right: calc(40px + 50% - 502px); /* Right padding to push content to the left */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);font-family: 'Inter', sans-serif; /* Apply the font family globally within the box */
 }
 
-.login-card {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
+.title {
+    color: #464D5F;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
-h2 {
-    margin-bottom: 1rem;
+.welcome-back {
+  color: #000;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 40px;
 }
 
-.user-icon {
-    font-size: 2rem;
-    background: #eee;
-    border-radius: 50%;
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    margin-bottom: 1rem;
+.register-now, .register-now a {
+  color: #464D5F;
+  font-size: 14px;
+  font-weight: 400;
 }
 
-.input-container {
-    position: relative;
-    margin-bottom: 1rem;
+.register-now a {
+  color: #0D43AA;
+  text-decoration: none; /* Remove underline from link */
 }
 
-.input-container input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.register-now a:hover {
+  color:#0D43AA; 
 }
 
-.password-toggle-icon {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
+.login-button {
+  width: 183px;
+  height: 43px;
+  border-radius: 12px;
+  background: #7D96FF;
+  color: #FFF;
+  font-size: 24px;
+  font-weight: 800;
+  border: none; /* Remove border */
+  cursor: pointer; /* Mouse pointer on hover */
 }
 
-.login-btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 20px;
-    color: white;
-    background: linear-gradient(to right, #6dd5ed, #2193b0);
-    cursor: pointer;
-    margin-top: 1rem;
+.input-field {
+  width: 340px;
+  height: 57px;
+  border-radius: 12px;
+  background: #DCE8FF;
+  border: none; /* Remove border */
+  padding-left: 15px; /* Padding inside the input field */
+  color: #464D5F;
+  font-size: 14px;
+  font-weight: 400;
 }
-
-.login-btn:hover {
-    opacity: 0.9;
+.input-field:last-of-type {
+  margin-top: 20px; /* Bottom margin for last type */
 }
-
-.signup-link {
-    margin-top: 1.5rem;
-}
-
-.signup-link a {
-    color: #2193b0;
-    text-decoration: none;
-}
-
-.signup-link a:hover {
-    text-decoration: underline;
-}
-
-
-
+/* Add focus styles to the input fields to remove the default browser outline */
+.input-field:focus {
+  outline: none;
+  /* Optional: add a subtle shadow or border to highlight focus */
+}  
 /*=========================================================================================================*/
 
-.register-container {
-    max-width: 400px;
-    margin: auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
-    font-family: Arial, sans-serif;
-}
-
-.register-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.register-header .back-arrow {
-    margin-right: 10px;
-    text-decoration: none;
-    color: #333;
-    font-size: 24px;
-}
-
-.register-header h2 {
-    flex-grow: 1;
-    text-align: center;
-}
-
-.input-group {
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.register-btn {
-    background-color: #ffcc00;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 18px;
-    margin-top: 20px;
-}
-
-.register-btn:hover {
-    background-color: #e6b800;
-}
-
-.register-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    
-}

@@ -38,11 +38,12 @@ mongoose.connect('mongodb://localhost:27017/tester', {
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000', // or the specific origin you want to allow
+  origin: 'http://localhost:3001', // this is the frontend's address
   methods: 'GET,POST,PUT,DELETE', // the HTTP methods you want to allow
-  credentials: true, // if you're using cookies and sessions
-  optionsSuccessStatus: 200 // for legacy browsers that don't support CORS
+  credentials: true, // this should be set to true if you are handling cookies or auth tokens
+  optionsSuccessStatus: 204 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }));
+
 
 
 // Verbinde die Routen mit der Anwendung
