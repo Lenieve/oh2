@@ -9,36 +9,29 @@ import './App.css'; // Import your App CSS
 const App = () => {
   return (
     <Router>
-      <div className="app-container"> {/* Use app-container class here */}
-        <Routes>
-          <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route element={<LayoutWithNavbar />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-            {/* ... other routes that should include the Navbar ... */}
-          </Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/login" />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route element={<LayoutWithNavbar />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          {/* ... other routes that should include the Navbar ... */}
+        </Route>
+      </Routes>
     </Router>
   );
 };
 
 const LayoutWithNavbar = () => {
-  const location = useLocation();
-  const showNavbar = !['/login', '/register'].includes(location.pathname);
-
   return (
-    <>
-      {showNavbar && (
-        <div className="navbar-container"> {/* Use navbar-container class here */}
-          <Navbar />
-        </div>
-      )}
-      <div className="main-content-container"> {/* Use main-content-container class here */}
-        <Outlet /> {/* The main content rendered by the router */}
+    <div className="dashboard-container"> {/* Renamed class */}
+      <div className="navbar-container">
+        <Navbar />
       </div>
-    </>
+      <div className="main-content-container">
+        <Outlet />
+      </div>
+    </div>
   );
 };
 

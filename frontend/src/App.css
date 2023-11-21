@@ -37,17 +37,17 @@
   }
 }
 
-.app-container {
-  display: flex;
-  min-height: 100vh; /* Full height of the viewport */
+.dashboard-container {
+  display: flex; /* Keep the flex layout here */
+  min-height: 100vh;
 }
 
 .navbar-container {
-  flex: 0 0 250px; /* Adjust the width of the navbar as needed */
-  /* Additional styles for the navbar */
+  flex: 0 0 250px;
+  /* Additional styles */
 }
 
 .main-content-container {
-  flex-grow: 1; /* Take up the remaining space */
-  /* Additional styles for the main content */
+  flex-grow: 1;
+  /* Additional styles */
 }
