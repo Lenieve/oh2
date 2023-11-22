@@ -232,3 +232,18 @@ exports.listAusbilder = async (req, res) => {
     res.status(500).send({ message: 'Serverfehler' });
   }
 };
+
+// Logik zum Auflisten der Ausbildungen eines bestimmten Ausbilders
+exports.listAusbildungenByAusbilder = async (req, res) => {
+  try {
+    const ausbilderId = req.params.id;
+    const ausbildungen = await Ausbildung.find({ ausbilder: ausbilderId });
+    if (!ausbildungen.length) {
+      return res.status(404).send({ message: 'Keine Ausbildungen gefunden' });
+    }
+    res.status(200).send(ausbildungen);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Serverfehler' });
+  }
+};

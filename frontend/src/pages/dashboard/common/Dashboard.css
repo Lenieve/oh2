@@ -1,0 +1,186 @@
+.main-content-container {
+    background: #F0F0FF;
+}
+
+.dashboard-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-column, .right-column {
+    flex: 1;
+    /* Add some margin for spacing */
+}
+
+/* Ensure components in each column are stacked vertically */
+.left-column > *, .right-column > * {
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+/* Styling for the "greeting" */
+.greeting {
+    color: #474E60;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 83.333% */
+    padding-left: 29px;
+    margin-top: 49px;
+}
+.greeting-name {
+    color: #474E60;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 20px;
+}
+
+/* Styling for the "Up Next" box */
+.up-next {
+    width: 525px;
+    height: 178px;
+    flex-shrink: 0;
+    border-radius: 19px;
+    background: linear-gradient(91deg, #739AFE 2.5%, rgba(115, 154, 254, 0.00) 87.76%), #B57BFF;
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 30px;
+}
+
+.up-next-title {
+    color: #FFF;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    padding-top: 35px;
+    padding-left: 33px;
+    margin-bottom: -15px;
+}
+
+.up-next-countdown {
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    padding-left: 33px;
+    margin-top: -10px;
+}
+.up-next-countdown2 {
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+
+.up-next-name {
+    color: #FFF;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 20px; /* 55.556% */
+    padding-left: 33px;
+}
+
+.calendar {
+    width: 525px;
+    height: 466px;
+    flex-shrink: 0;
+    border-radius: 19px;
+    background: linear-gradient(0deg, #FFF 0%, #FFF 100%), rgba(181, 123, 255, 0.15);
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.25);
+    margin-left: 30px;
+}
+.calendar-title {
+    color: #464D5F;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 62.5% */
+    margin-left: 33px;
+    padding-top: 39px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 326px;
+    height: 682px;  
+    flex-shrink: 0;
+    border-radius: 19px;
+    background: #FFF;
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.25);
+    margin-left: -30px;
+    margin-top: 10px;
+
+}
+.profile-title {
+    color: #464D5F;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 83.333% */
+    padding-top: 39px;
+}
+.profile-picture {
+  width: 140px;
+  height: 136px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #B57AFF;
+  box-shadow: 0px 2px 2.1px 0px rgba(0, 0, 0, 0.20);
+  margin: 0 auto;
+}
+.profile-button {
+  width: 152px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #4A7DFF;
+  background: #FFF;
+  color: #484848;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  margin-top: 19px;
+  /* Rest of your CSS code */
+}
+
+.profile-button:hover {
+  background: #4A7DFF;
+  color: #FFF;
+}
+
+.profile-name {
+    color: #464D5F;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 125% */
+    margin: 0px;
+    padding-top: 19px;
+}
+.profile-line {
+  width: 248px;
+  height: 2px;
+  background: #E7E7E7;
+  border: none;
+  margin-top: 18px;
+
+}
+
+.overview {
+    color: #464D5F;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 83.333% */
+}

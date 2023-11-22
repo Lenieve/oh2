@@ -10,10 +10,18 @@ exports.register = async (req, res) => {
   try {
     const { username, password, role, name, birthday, ausbildung, ausbilder } = req.body;
 
+    // Check if all required fields are filled out
     if (!username || !password || !role || !name || !birthday || !ausbildung) {
       return res.status(400).send({ message: 'Alle Felder müssen ausgefüllt sein' });
     }
 
+    // Check if the username is already taken
+    const usernameExists = await Ausbilder.findOne({ username }) || await Azubi.findOne({ username });
+    if (usernameExists) {
+      return res.status(400).send({ message: 'Benutzername ist bereits vergeben' });
+    }
+
+    // Proceed with the rest of the registration as before
     let user;
     const hashedPassword = await bcrypt.hash(password, 10);
 

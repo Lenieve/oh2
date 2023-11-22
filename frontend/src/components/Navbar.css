@@ -18,14 +18,11 @@
   font-size: 48px;
   font-weight: 900;
   line-height: 70px;
-  letter-spacing: 3.36px; /* Adjust for "Office" */
+  letter-spacing: 1.8px; /* Adjust for "Office" */
   margin-bottom: 120px; /* Space below the header */
-  padding-left: 23px;
+  padding-left: 14px;
 }
 
-.sidebar-header .hooray {
-  letter-spacing: 7.2px; /* Adjust for "Hooray" */
-}
 
 .nav-list {
   list-style: none; /* Remove default list styling */

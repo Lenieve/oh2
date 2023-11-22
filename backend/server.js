@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 3000;
 const countdownRoutes = require('./routes/countdownRoutes'); //
 
 // Verbindung zur MongoDB Datenbank
-mongoose.connect('mongodb://localhost:27017/tester', {
+mongoose.connect('mongodb://localhost:27017/Frontend', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
