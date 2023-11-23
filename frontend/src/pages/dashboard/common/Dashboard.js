@@ -82,20 +82,59 @@ const Calendar = () => {
     </div>
   );
 };
+
 // Profile.js
-const Profile = ({ role }) => {
+const Profile = ({ user }) => {
+  const [data, setData] = useState([]);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response;
+        if (user.role === 'Ausbilder') {
+          response = await axios.get(`http://localhost:3000/ausbilder/${user.id}/ausbildungs`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+        } else {
+          response = await axios.get(`http://localhost:3000/azubi/${user.id}`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+        }
+        setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error
+      }
+    };
+
+    if (user && user.id) {
+      fetchData();
+    }
+  }, [user, token]);
+
+  if (!user) {
+    return <div>Loading user data...</div>;
+  }
+
+
   return (
-    <div className="profile">
-      <div >
+<div className="profile">
+      {/* Now it's safe to access user.name and user.role */}
+      <div>
         <h2 className="profile-title">My Profile</h2>
         <div className="profile-picture"></div>
-        <h3 className="profile-name">{user.name}</h3> 
+        <h3 className="profile-name">{user.name}</h3>
         <button className="profile-button">Edit Profile</button>
       </div>
       <div><hr className="profile-line" /></div>
       <div>
-        <h2 className="overview">{role === 'Azubi' ? 'My Wishlist' : 'Ausbildung Overview'}</h2>
-        <p>[Details will be displayed here]</p>
+        <h2 className="overview">{user.role === 'Azubi' ? 'My Wishlist' : 'Ausbildung Overview'}</h2>
+        <ul>
+          {data.map(item => (
+            <li key={item._id}>{item.name || item.beschreibung}</li> // Adjust according to your data structure
+          ))}
+        </ul>
       </div>
     </div>
   );
@@ -110,7 +149,7 @@ return (
         <Calendar />
       </div>
       <div className="right-column">
-        <Profile role={user.role} />
+        <Profile user={user} />
       </div>
     </div>
   </div>
