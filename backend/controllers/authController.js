@@ -73,9 +73,14 @@ exports.register = async (req, res) => {
         await Ausbildung.findByIdAndUpdate(id, { $set: { ausbilder: savedUser._id } });
       }
     } else { // Azubi
-      if (ausbilder) {
         await Ausbilder.findByIdAndUpdate(ausbilder, { $push: { azubis: savedUser._id } });
-      }
+        const updatedAusbildung = await Ausbildung.findByIdAndUpdate(
+          ausbildung,
+          { $push: { azubis: savedUser._id } },
+          { new: true }
+        );
+        console.log(updatedAusbildung); // Log to confirm the azubis array is updated
+        
 }
 
     // Token erstellen und senden

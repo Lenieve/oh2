@@ -6,7 +6,7 @@ const Kalender = require('../models/Kalender'); // Pfad anpassen, falls nötig
 // Logik zum Erstellen eines Azubis
 // Beispiel einer Validierung vor dem Speichern
 // Logik zum Erstellen eines Azubis
-exports.createAzubi = async (req, res) => {
+/*exports.createAzubi = async (req, res) => {
   console.log('createAzubi function called with data:', req.body);
   try {
     const { name, birthday, ausbildung } = req.body;
@@ -31,7 +31,7 @@ exports.createAzubi = async (req, res) => {
     res.status(500).send({ message: 'Serverfehler' });
   }
 };
-
+*/
 
 // In Ihrem azubiController.js
 exports.deleteAzubi = async (req, res) => {

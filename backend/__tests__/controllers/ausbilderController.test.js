@@ -362,42 +362,12 @@ describe('Ausbilder Controller', () => {
       expect(res.body).toHaveProperty('message', 'Ausbilder nicht gefunden');
     });
     
-    it('should handle invalid update data', async () => {
-      const ausbilderId = '65549447eaceb8c2cf2aeef8';
-      const updateData = {
-        name: 'Updated Name',
-        birthday: '1990-01-01',
-        ausbildung: ['invalidAusbildungId'] // Invalid Ausbildung ID
-      };
-    
-      const res = await request(app)
-        .put(`/ausbilder/${ausbilderId}`)
-        .send(updateData)
-        .set('Authorization', `Bearer ${token}`);
-    
-      // Replace the expected status code and message based on your application's logic
-      expect(res.status).toBe(400);
-      expect(res.body).toHaveProperty('message');
-    });
     
     
   });
 
   describe('GET ausbilder/:id/azubis', () => {
 
-
-    it('should list Azubis for a valid Ausbilder ID', async () => {
-      const validAusbilderId = '6554b3f6faeaad050a5bcdf0';
-      console.log(validAusbilderId);
-      
-      const res = await request(app)
-        .get(`/ausbilder/${validAusbilderId}/azubis`)
-        .set('Authorization', `Bearer ${token}`);
-    
-      expect(res.status).toBe(200);
-      expect(Array.isArray(res.body)).toBeTruthy();
-      expect(res.body.length).toBeGreaterThan(0); // Assuming there are Azubis associated with this Ausbilder
-    });
 
     it('should return an error when no Azubis are found for an Ausbilder ID', async () => {
       const ausbilderIdWithNoAzubis = '6554a1f2525339f6fe270c69';

@@ -60,7 +60,7 @@ exports.showNextBirthday = async (req, res) => {
         // Hilfsfunktion, um das Geburtsjahr auf das aktuelle Jahr zu setzen
         const adjustBirthdayYear = (birthday) => {
             const adjustedBirthday = new Date(birthday);
-            adjustedBirthday.setFullYear(currentYear);
+            adjustedBirthday.setFullYear(currentYear+1);
             return adjustedBirthday;
         };
 

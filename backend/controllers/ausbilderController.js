@@ -243,7 +243,8 @@ exports.listAusbildungenByAusbilder = async (req, res) => {
     }
     res.status(200).send(ausbildungen);
   } catch (error) {
-    console.error(error);
-    res.status(500).send({ message: 'Serverfehler' });
-  }
+    console.error("Error fetching Ausbildungen by Ausbilder:", error.message);
+    res.status(500).send({ message: 'Serverfehler', error: error.message });
+}
+
 };

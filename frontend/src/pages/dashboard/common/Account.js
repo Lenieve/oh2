@@ -12,3 +12,4 @@ const AccountPage = () => {
 };
 
 export default AccountPage;
+//TODO Add funtionality to AccountPage

@@ -5,10 +5,6 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const cors = require('cors');
 
-
-
-
-
 // Importiere die Routen
 const authRoutes = require('./routes/authRoutes');
 const azubiRoutes = require('./routes/azubiRoutes');
@@ -24,7 +20,7 @@ const PORT = process.env.PORT || 3000;
 const countdownRoutes = require('./routes/countdownRoutes'); //
 
 // Verbindung zur MongoDB Datenbank
-mongoose.connect('mongodb://localhost:27017/Frontend', {
+mongoose.connect('mongodb://localhost:27017/OH', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
