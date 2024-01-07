@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const authMiddleware = require('/Users/jacquelineloewe/yannickihkgitrepo/oh2/backend/middlewares/authMiddleware.js');
+const authMiddleware = require('../../middlewares/authMiddleware.js');
 process.env.JWT_SECRET = 'your_jwt_secret_for_testing';
 
 describe('authenticateJWT', () => {

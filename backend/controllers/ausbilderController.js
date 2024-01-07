@@ -1,6 +1,6 @@
 const Ausbilder = require('../models/Ausbilder');
 const Ausbildung = require('../models/Ausbildung');
-const Azubi = require('/Users/jacquelineloewe/yannickihkgitrepo/oh2/backend/models/Azubi.js');
+const Azubi = require('../models/Azubi.js');
 const Kalender = require('../models/Kalender');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); // Ensure you have bcryptjs installed for password hashing

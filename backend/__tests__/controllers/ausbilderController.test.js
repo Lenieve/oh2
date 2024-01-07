@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../../server'); // Adjust the path as necessary
 const Ausbildung = require('../../models/Ausbildung'); // Adjust the path as needed
 const Ausbilder = require('../../models/Ausbilder'); // Adjust the path as needed
-const Azubi = require('/Users/jacquelineloewe/yannickihkgitrepo/oh2/backend/models/Azubi.js'); // Adjust the path to the correct location of your Azubi model
+const Azubi = require('../../models/Azubi.js'); // Adjust the path to the correct location of your Azubi model
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
